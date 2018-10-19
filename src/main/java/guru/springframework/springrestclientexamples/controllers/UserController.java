@@ -27,6 +27,7 @@ public class UserController {
     @PostMapping("/users")
     public String formPost(Model model, ServerWebExchange serverWebExchange) {
 
+        // STANDARD CODE FOR RETRIEVING USERS
         MultiValueMap<String, String> map = serverWebExchange.getFormData().block();
 
         Integer limit = new Integer(map.get("limit").get(0));
@@ -39,6 +40,11 @@ public class UserController {
         }
 
         model.addAttribute("users", apiService.getUsers(limit));
+
+        // REACTIVE CODE FOR RETRIEVING USERS
+//        model.addAttribute("users", apiService.getUsers(serverWebExchange
+//                            .getFormData()
+//                            .map(data -> new Integer(data.getFirst("limit")))));
 
         return "userList";
     }
